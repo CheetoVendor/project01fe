@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const FriendDisplay = () => {
+const FriendDisplay = ({ userId }) => {
 
     // get friends for user
     const [friends, setFriends] = useState([]);
     const [usersFriends, setUsersFriends] = useState([])
     const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('userId');
+    const navigate = useNavigate();
 
     // Filters the list of friends
     let getFriends = () => {
@@ -50,24 +51,31 @@ const FriendDisplay = () => {
         }
     }, [friends])
 
-    const handleFriendClick = (friend) => {
-        // navigate to friends page.
+    const handleFriendClick = (friendId) => {
+        navigate(`/profile/${friendId}`)
     }
 
+    const noFriends = friends.length === 0;
 
     return (
         <div className="friendContainer">
             <h3>Friends</h3>
             <hr />
             <div>
-                {
-                    usersFriends.map((friend) => (
-                        <div className="friendCard" onClick={() => handleFriendClick(friend)} key={friend.accountId}>
-                            <img className="profilePicture" src={friend.profilePicture} />
-                            <b>{friend.username}</b>
-                        </div>
-                    ))
-                }
+                {noFriends ? (
+                    <p>No friends to display...</p>
+                ) : (
+                    <div>
+                        {
+                            usersFriends.map((friend) => (
+                                <div className="friendCard" onClick={() => handleFriendClick(friend.accountId)} key={friend.accountId}>
+                                    <img className="profilePicture" src={friend.profilePicture} />
+                                    <b>{friend.username}</b>
+                                </div>
+                            ))
+                        }
+                    </div>
+                )}
             </div>
         </div>
     );

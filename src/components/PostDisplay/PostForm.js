@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-const PostForm = () => {
+const PostForm = ({ onPostAdded }) => {
     const [postText, setPostText] = useState("")
 
     const submitHandler = (e) => {
@@ -18,11 +18,16 @@ const PostForm = () => {
             })
                 .then((res) => {
                     console.log("HELLO" + res);
+                    onPostAdded(res.data);
                 })
+
+
         } catch (ex) {
             console.log(ex);
         }
         setPostText("")
+
+
     }
 
     return (

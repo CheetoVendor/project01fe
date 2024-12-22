@@ -175,6 +175,7 @@ input {
   justify-content: space-between;
   gap: 50px;
   padding: 20px;
+  margin-top: 80px;
 }
 
 
@@ -206,7 +207,9 @@ input {
   flex: auto;
   justify-content: flex-start;
   gap: 10px;
-  width: 300px;
+  width: 250px;
+  min-height: 200px;
+  margin: 10px;
 }
 
 strong {
@@ -217,19 +220,11 @@ strong {
 
 .friendCard:hover {
   transform: scale(1.05);
-  /* Slightly scale up the card */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  /* Add shadow on hover */
   cursor: pointer;
-  /* Change cursor to pointer to indicate it's clickable */
 }
 
-.userProfile {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
 
-}
 
 .profileInfo {
   display: flex;
@@ -239,7 +234,6 @@ strong {
   position: absolute;
   margin-top: 80px;
   margin-left: 20px;
-  /* change if needed*/
 }
 
 .profilePictureOnProfile {
@@ -251,11 +245,20 @@ strong {
 
 .usernameOnProfile {
   font-size: 2.2rem;
-  /* Adjust font size */
   font-weight: bold;
 }
 
 hr {
   color: white;
-  width: 100%;
+}
+
+.postHeader :hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.addFriendButton {
+  margin-left: 20px;
+  cursor: pointer;
 }

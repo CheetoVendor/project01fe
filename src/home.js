@@ -1,20 +1,21 @@
+import { useState } from "react";
 import AxiosGetPosts from "./components/PostDisplay/AxiosGetPosts";
 import PostForm from "./components/PostDisplay/PostForm";
 import UserLinks from "./components/PostDisplay/UserLinks";
 const Home = () => {
+
+    const [posts, setPosts] = useState([])
+
+    const addPost = (newPost) => {
+        setPosts((prevPosts) => [...prevPosts, newPost]);
+    }
+
     return (
-        <div className="homeContainer">
-            <div className="leftColumn">
-                <UserLinks />
-            </div>
-            <div className="centerColumn">
-                <PostForm />
-                <AxiosGetPosts />
-            </div>
-            <div className="rightColumn">
-                <h2>right col</h2>
-            </div>
+        <div className="centerColumn">
+            <PostForm onPostAdded={addPost} />
+            <AxiosGetPosts posts={posts} setPosts={setPosts} />
         </div>
+
 
     );
 }

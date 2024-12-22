@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import PostDisplay from "./PostDisplay";
 import axios from "axios";
 
-const AxiosGetPosts = () => {
-    const [posts, setPost] = useState([])
+const AxiosGetPosts = ({ posts, setPosts }) => {
+    //const [posts, setPost] = useState([])
+
     const token = localStorage.getItem('token');
     useEffect(() => {
         axios.get("http://localhost:8080/posts", {
@@ -12,9 +13,9 @@ const AxiosGetPosts = () => {
             }
         })
             .then(res => {
-                setPost(res.data)
+                setPosts(res.data)
             });
-    }, [])
+    }, [posts])
 
     return (
         <div className="postContainer">

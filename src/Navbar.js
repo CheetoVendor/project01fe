@@ -4,6 +4,7 @@ const Navbar = () => {
     const signout = () => {
         localStorage.removeItem('token')
     }
+    const token = localStorage.getItem('token');
 
     return (
         <div className="navbar">
@@ -13,8 +14,9 @@ const Navbar = () => {
                 <Link to="./home">Home</Link>
                 <Link to="./login">Login</Link>
                 <Link to="./signup">Signup</Link>
+
                 <Link to="./login" onClick={signout}>Signout</Link>
-                <Link to="./profile" >Profile</Link>
+                <Link to="./profile/1" >Profile</Link>
             </div>
         </div >
     );
