@@ -6,9 +6,13 @@ const PostForm = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
+        const token = localStorage.getItem('token')
 
         try {
             axios.post("http://localhost:8080/posts", {
+                headers: {
+                    Authorization: 'Bearer ' + token
+                },
                 postText: postText,
                 postedBy: { accountId: 1 }
             })

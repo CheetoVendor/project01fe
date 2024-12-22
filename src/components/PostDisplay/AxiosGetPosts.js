@@ -13,7 +13,6 @@ const AxiosGetPosts = () => {
         })
             .then(res => {
                 setPost(res.data)
-                console.log(res)
             });
     }, [])
 

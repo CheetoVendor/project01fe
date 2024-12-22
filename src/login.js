@@ -2,6 +2,9 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AuthService from "./AuthService";
+import { jwtDecode } from "jwt-decode";
+import { useContext } from "react";
+
 const Login = () => {
 
     const [username, setUsername] = useState("");
@@ -12,45 +15,31 @@ const Login = () => {
         username: username,
         password: password
     };
-    /*
-    const loginHandler = async (e) => {
-        e.preventDefault();
-        try {
-            await axios.post("http://localhost:8080/api/login", data)
-                .then((response) => {
-                    console.log(response);
-                    if (response.status == 200) {
-                        console.log("Login success..");
-                        // log user in and navigate to home
-                        navigate('/home')
-                    } else {
-                        setErrorMessage("Username or password is incorrect!");
-                        console.log("login failed..");
-                        // throw error message
 
-                    }
-                })
-        } catch (ex) {
-            console.log(ex);
-        }
-    }
-*/
     const loginHandler = async (e) => {
         e.preventDefault();
         try {
             const response = await AuthService.login(data);
+
             if (response.data !== 'Invalid credentials') {
+                // save token to storage
                 localStorage.setItem('token', response.data);
+
+                // get user info
+                const decoded = jwtDecode(localStorage.getItem('token'))
+                // save user info
+                localStorage.setItem('userId', decoded.userId)
+                //navigate home
                 navigate('/home');
             } else {
                 console.log('Invalid credentials');
-                console.log(response);
-
             }
         } catch (error) {
             console.log('ERROR: Invalid credentials');
         }
     }
+
+
     return (
         <div>
             <br />
@@ -63,8 +52,9 @@ const Login = () => {
 
                 <button>Login</button><br /> <br />
                 <p>{errorMessage}</p>
+
                 {/* link to signup page*/}
-                <a>New user? Sign up here.. </a>
+                <a href="" onClick={() => navigate('../signup')}>New user? Sign up here.. </a>
             </form>
         </div>
     );

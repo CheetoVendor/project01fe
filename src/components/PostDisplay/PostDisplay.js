@@ -1,3 +1,6 @@
+import { MdAlignHorizontalLeft, MdMargin, MdOutlineThumbUp } from "react-icons/md";
+import { FaHeart } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa6";
 const PostDisplay = ({ posts }) => {
     return (
         <>
@@ -10,13 +13,15 @@ const PostDisplay = ({ posts }) => {
                         </div>
                         <hr className="divider" />
                         <div className="postContent">
-                            <b>{post.postText}</b>
+                            <span>{post.postText}</span>
+                            <br />
+                            <img src={post.imageUrl}></img>
                         </div>
-
-
+                        <hr />
                         <div className="postFooter">
-                            <hr />
-                            <img ></img>
+
+                            <MdOutlineThumbUp size={30} />
+                            <FaRegHeart size={30} />
                             <input type="text"></input>
                             <button>comment</button>
                         </div>

@@ -11,9 +11,15 @@
   padding: 20px;
   display: flex;
   align-items: center;
-  max-width: 600px;
+  top: 0;
+  left: 0;
+  width: 100%;
   margin: 0 auto;
-  border-bottom: 1px solid #f2f2f2;
+  position: fixed;
+  z-index: 1000;
+  padding: 10px 0;
+  background-color: #3f3f3f;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .navbar h1 {
@@ -41,8 +47,8 @@
 }
 
 .profilePicture {
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   padding: 1px;
   border-radius: 50%;
   margin-right: 10px;
@@ -53,7 +59,7 @@
   border: 1px solid #00000F;
   margin-bottom: 2%;
   padding: 10px;
-  height: 200px;
+  height: auto;
   align-items: center;
   background-color: #3f3f3f;
   border-radius: 10px;
@@ -72,7 +78,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 20px;
+  padding: 25px;
   border: 1px solid black;
   border-radius: 10px;
   background: #3f3f3f;
@@ -94,6 +100,7 @@
   width: 500px;
   color: white;
   border-radius: 10px;
+  margin-top: 20px;
 }
 
 button {
@@ -143,5 +150,112 @@ input {
 
 .postFooter input {
   border-radius: 10px;
-  width: 50%;
+  width: 300px;
+  margin-left: 30px;
+}
+
+.postFooter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+  margin: 10px;
+}
+
+.postContent img {
+  width: 512px;
+  height: 512px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.homeContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+  padding: 20px;
+}
+
+
+.leftColumn {
+  width: 250px;
+  background-color: black;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.centerColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.rightColumn {
+  width: 250px;
+}
+
+.signupform {
+  margin-top: 20px;
+}
+
+.friendContainer {
+  border: 1px solid white;
+  align-items: center;
+  flex: auto;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 300px;
+}
+
+strong {
+  align-content: center;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.friendCard:hover {
+  transform: scale(1.05);
+  /* Slightly scale up the card */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  /* Add shadow on hover */
+  cursor: pointer;
+  /* Change cursor to pointer to indicate it's clickable */
+}
+
+.userProfile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+}
+
+.profileInfo {
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: 0;
+  position: absolute;
+  margin-top: 80px;
+  margin-left: 20px;
+  /* change if needed*/
+}
+
+.profilePictureOnProfile {
+  width: 256px;
+  height: 256px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.usernameOnProfile {
+  font-size: 2.2rem;
+  /* Adjust font size */
+  font-weight: bold;
+}
+
+hr {
+  color: white;
+  width: 100%;
 }
