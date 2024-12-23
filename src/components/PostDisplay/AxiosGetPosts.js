@@ -19,7 +19,7 @@ const AxiosGetPosts = ({ posts, setPosts }) => {
 
     return (
         <div className="postContainer">
-            <PostDisplay posts={posts} />
+            <PostDisplay setPosts={setPosts} posts={posts} />
         </div>
     );
 }
