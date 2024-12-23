@@ -13,7 +13,7 @@ const SignupForm = () => {
         e.preventDefault()
         // see if passwords match
         if (password === passwordVerification) {
-            if (username.length > 5) {
+            if (username.length > 0) {
                 axios.post(`http://localhost:8080/register`, {
                     headers: {
                         Authorization: `Bearer ${token}`

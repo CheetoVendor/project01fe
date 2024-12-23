@@ -268,3 +268,23 @@ hr {
 .biographyInfo {
   margin-top: 230px;
 }
+
+.commentContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.profilePictureComment {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.profilePictureComment :hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}

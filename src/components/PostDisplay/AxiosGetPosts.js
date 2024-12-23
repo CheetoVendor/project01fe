@@ -3,7 +3,6 @@ import PostDisplay from "./PostDisplay";
 import axios from "axios";
 
 const AxiosGetPosts = ({ posts, setPosts }) => {
-    //const [posts, setPost] = useState([])
 
     const token = localStorage.getItem('token');
     useEffect(() => {
