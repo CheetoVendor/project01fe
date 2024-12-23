@@ -7,6 +7,7 @@ import Comments from "../../PostDisplay/Comments/Comments";
 const UsersPostsDisplay = ({ userId }) => {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
+    const [likedPosts, setLikedPosts] = useState({})
     const token = localStorage.getItem('token');
     const currentUsersId = localStorage.getItem('userId');
 
@@ -14,7 +15,38 @@ const UsersPostsDisplay = ({ userId }) => {
         navigate(`/profile/${id}`)
     }
 
-    const handleLiked = () => {
+    const handleLiked = (postId) => {
+        setLikedPosts((prev) => ({
+            ...prev,
+            [postId]: !prev[postId],
+        }));
+
+        const isLiked = likedPosts[postId];
+        if (!isLiked) {
+            axios.post(`http://localhost:8080/posts/${postId}/likes`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                postId: postId,
+                accountId: userId,
+                type: 1
+            }).then(res => {
+                console.log('like reaction submitted.')
+                console.log(res.data)
+            })
+        } else {
+            axios.delete(`http://localhost:8080/posts/${postId}/likes`, {
+                headers: {
+                    Authorization: `Bearer ${token}` // postId account Id type
+                },
+                postId: postId,
+                accountId: currentUsersId,
+                type: 1
+            }).then((res) => {
+                console.log(res.data);
+                console.log("like removed!")
+            })
+        }
 
     }
 
@@ -35,10 +67,29 @@ const UsersPostsDisplay = ({ userId }) => {
             });
     }, [userId, token])
 
-    // get like for post by user Id 
-    useEffect((postId) => {
+    // get likes for each post
+    useEffect(() => {
+        posts.forEach((post) => {
+            axios.get(`http://localhost:8080/posts/${post.postId}/likes`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+                .then((res) => {
+                    const isLiked = res.data.some((like) => like.userId === currentUsersId);
+                    setLikedPosts((prev) => ({
+                        ...prev,
+                        [post.postId]: isLiked
+                    }))
+                    console.log(res.data)
+                    setLikedPosts(res.data)
+                })
+                .catch((ex) => {
+                    console.log(ex);
+                })
+        })
+    }, [posts, token])
 
-    }, [])
     return (
         <div>
             <h2> Users Posts </h2>
@@ -57,10 +108,11 @@ const UsersPostsDisplay = ({ userId }) => {
                         </div>
                         <Comments postId={post.postId} />
                         <div className="postFooter">
-
-                            <MdOutlineThumbUp size={30} style={{ cursor: 'pointer' }} onClick={() => handleLiked(post.postId)} />
-
-                            <FaRegHeart size={30} style={{ cursor: 'pointer' }} />
+                            <button
+                                onClick={() => handleLiked(post.postId)}
+                            >
+                                {likedPosts[post.postId] ? 'Unlike' : 'Like'}
+                            </button>
                             <input type="text"></input>
                             <button>comment</button>
                         </div>
