@@ -102,7 +102,7 @@ const PostDisplay = ({ setPosts, posts, update }) => {
                         [post.postId]: isLiked
                     }))
                     console.log(res.data)
-                    setLikedPosts(res.data)
+                    //setLikedPosts(res.data)
                 })
                 .catch((ex) => {
                     console.log(ex);
@@ -124,7 +124,6 @@ const PostDisplay = ({ setPosts, posts, update }) => {
                 setCommentText("");
                 console.log(res);
                 console.log("Comment submitted")
-                update();
             })
             .catch((ex) => {
                 console.log(ex);
@@ -150,9 +149,10 @@ const PostDisplay = ({ setPosts, posts, update }) => {
                         <Comments postId={post.postId} />
                         <div className="postFooter">
                             {likedPosts[post.postId] ? (
-                                <MdOutlineThumbUp size={30} style={{ cursor: 'pointer' }} onClick={() => handleLiked(post.postId)} />
-                            ) : (
                                 <MdThumbUp size={30} style={{ cursor: 'pointer' }} onClick={() => handleLiked(post.postId)} />
+                            ) : (
+                                <MdOutlineThumbUp size={30} style={{ cursor: 'pointer' }} onClick={() => handleLiked(post.postId)} />
+
                             )}
 
 

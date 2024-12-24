@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+import { AiOutlineClose } from "react-icons/ai";
 const Follow = () => {
     const [followers, setFollowers] = useState([]);
     const [following, setFollowing] = useState([]);
@@ -15,13 +15,14 @@ const Follow = () => {
             }
         })
             .then((res) => {
-                console.log(res.data);
-                const filtered = res.data.filter((follow) => follow.followedId !== userId);
-                setFollowers(filtered);
+                console.log("logging followers: " + res.data);
+                setFollowers(res.data);
             })
             .catch((ex) => {
                 console.log(ex);
             })
+
+
     }, [userId])
 
     // get following
@@ -32,14 +33,29 @@ const Follow = () => {
             }
         })
             .then((res) => {
-                console.log(res.data)
-                const filtered = res.data.filter((follow) => follow.followerId === userId);
-                setFollowing(filtered)
+                console.log("logging following: " + res.data);
+                console.log(res.data);
+                setFollowing(res.data);
             })
             .catch((ex) => {
                 console.log(ex);
             })
     }, [userId])
+
+    const handleDeleteFollow = (follow) => {
+        axios.delete(`http://localhost:8080/followed/${userId}/${follow.accountId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then((res) => {
+                setFollowing(prevFollowing => prevFollowing.filter(f => f !== follow));
+                console.log(res.data);
+            })
+            .catch((ex) => {
+                console.log(ex);
+            })
+    }
 
     return (
         <div>
@@ -48,8 +64,8 @@ const Follow = () => {
                 {
                     followers.map((follow) => (
                         <div>
-                            <img className="profilePicture" src={follow.followed.profilePicture} />
-                            <span className="profileName" >{follow.followed.username}</span>
+                            <img className="profilePicture" src={follow.profilePicture} />
+                            <span className="profileName" >{follow.username}</span>
                         </div>
 
                     ))
@@ -62,8 +78,9 @@ const Follow = () => {
                 {
                     following.map((follow) => (
                         <div>
-                            <img class="profilePicture" className="profilePicture" src={follow.followed.profilePicture} />
-                            <span className="profileName">{follow.followed.username}</span>
+                            <img className="profilePicture" src={follow.profilePicture} />
+                            <span className="profileName">{follow.username}</span>
+                            <AiOutlineClose style={{ marginLeft: "20px" }} onClick={() => handleDeleteFollow(follow)} />
                         </div>
 
                     ))

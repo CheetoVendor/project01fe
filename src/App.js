@@ -8,6 +8,7 @@ import Signup from './signup';
 import Profile from './profile';
 import { useState } from 'react';
 import Relationships from './relationships';
+import EditProfile from './editprofile';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route path='/signup' element={<Signup />} />
           <Route path='/profile/:userId' element={<Profile />} />
           <Route path="/relationships" element={<Relationships />} />
+          <Route path='/editprofile' element={<EditProfile />} />
         </Routes>
 
       </div>
