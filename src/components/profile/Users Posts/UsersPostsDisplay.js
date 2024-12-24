@@ -8,6 +8,7 @@ const UsersPostsDisplay = ({ userId }) => {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
     const [likedPosts, setLikedPosts] = useState({})
+    const [lovedPosts, setLovedPosts] = useState({})
     const token = localStorage.getItem('token');
     const currentUsersId = localStorage.getItem('userId');
 
@@ -49,7 +50,38 @@ const UsersPostsDisplay = ({ userId }) => {
         }
 
     }
-
+    const handleLoved = (postId) => {
+        setLovedPosts((prev) => ({
+            ...prev,
+            [postId]: !prev[postId]
+        }));
+        const isLiked = likedPosts[postId];
+        if (!isLiked) {
+            axios.post(`http://localhost:8080/posts/${postId}/likes`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                postId: postId,
+                accountId: userId,
+                type: 2
+            }).then(res => {
+                console.log('love reaction submitted.')
+                console.log(res.data)
+            })
+        } else {
+            axios.delete(`http://localhost:8080/posts/${postId}/likes`, {
+                headers: {
+                    Authorization: `Bearer ${token}` // postId account Id type
+                },
+                postId: postId,
+                accountId: currentUsersId,
+                type: 2
+            }).then((res) => {
+                console.log(res.data);
+                console.log("love removed!")
+            })
+        }
+    }
     // get users posts
     useEffect(() => {
         axios.get(`http://localhost:8080/accounts/${userId}/posts`, {
@@ -112,6 +144,12 @@ const UsersPostsDisplay = ({ userId }) => {
                                 onClick={() => handleLiked(post.postId)}
                             >
                                 {likedPosts[post.postId] ? 'Unlike' : 'Like'}
+                            </button>
+
+                            <button
+                                onClick={() => handleLoved(post.postId)}
+                            >
+                                {lovedPosts[post.postId] ? 'Unlove' : 'Love'}
                             </button>
                             <input type="text"></input>
                             <button>comment</button>

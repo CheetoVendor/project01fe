@@ -3,13 +3,15 @@ import FriendDisplay from "./components/Friends/FriendDisplay";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import UsersPostsDisplay from "./components/profile/Users Posts/UsersPostsDisplay";
-
+import Follow from "./components/Follows/Follow";
+import FriendRequests from "./components/Friends/FriendRequests";
 const Profile = () => {
     const token = localStorage.getItem('token');
     const [user, setUser] = useState("");
     const { userId } = useParams();
     const currentUsersProfile = localStorage.getItem('userId')
     const [isFriend, setIsFriend] = useState(null)
+    const [following, setFollowing] = useState(null)
     const [activeTab, setActiveTab] = useState("profile")
 
     // Checks whether the user is already a friend OR if its the same users account
@@ -64,6 +66,22 @@ const Profile = () => {
             })
     }
 
+    // checks whether youre following the user or not
+    useEffect(() => {
+        axios.get(`http://localhost:8080/followers/${currentUsersProfile}/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then((res) => {
+                console.log(res.data);
+
+            })
+            .catch((ex) => {
+                console.log(ex);
+            })
+    }, [userId])
+
     return (
 
         <div className="userProfile">
@@ -83,10 +101,6 @@ const Profile = () => {
                 <hr /> <br />
                 <b>{user.bioText}</b> <br />
             </div>
-
-
-
-            <FriendDisplay userId={userId} />
             <br />
             <UsersPostsDisplay userId={userId} />
         </div>

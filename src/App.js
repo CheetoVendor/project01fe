@@ -7,6 +7,7 @@ import Login from './login';
 import Signup from './signup';
 import Profile from './profile';
 import { useState } from 'react';
+import Relationships from './relationships';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/profile/:userId' element={<Profile />} />
+          <Route path="/relationships" element={<Relationships />} />
         </Routes>
 
       </div>

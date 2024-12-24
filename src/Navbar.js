@@ -17,6 +17,7 @@ const Navbar = () => {
 
                 <Link to="./login" onClick={signout}>Signout</Link>
                 <Link to="./profile/1" >Profile</Link>
+                <Link to="./relationships">Relationships</Link>
             </div>
         </div >
     );
