@@ -5,7 +5,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Comments from "./Comments/Comments";
-const PostDisplay = ({ setPosts, posts, update }) => {
+const PostDisplay = ({ setPosts, posts }) => {
     const navigate = useNavigate();
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('token');
