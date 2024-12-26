@@ -5,9 +5,12 @@ import { useNavigate } from "react-router-dom";
 const Comments = ({ postId }) => {
     const [comments, setComments] = useState([]);
     const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId')
     const navigate = useNavigate();
-    const [commentsVisible, setCommentsVisible] = useState(false);
+    const [commentText, setCommentText] = useState("");
 
+
+    // gets comments for each post
     useEffect(() => {
         axios.get(`http://localhost:8080/posts/${postId}/comments`, {
             headers: {
@@ -24,6 +27,25 @@ const Comments = ({ postId }) => {
         navigate(`/profile/${userId}`)
     }
 
+    // posts comment to website
+    const handleSubmitComment = (postId) => {
+        axios.post(`http://localhost:8080/posts/${postId}/comments`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            postId: postId,
+            text: commentText,
+            accountId: userId
+        })
+            .then((res) => {
+                setCommentText("");
+                console.log(res);
+                console.log("Comment submitted")
+            })
+            .catch((ex) => {
+                console.log(ex);
+            })
+    }
 
     return (
         <div className="comments">
@@ -51,6 +73,14 @@ const Comments = ({ postId }) => {
 
             )}
             <hr />
+            <div className="postFooter">
+
+                {/* Comment section*/}
+                <input type="text" value={commentText} onChange={(e) => setCommentText(e.target.value)}></input>
+                <button onClick={() => handleSubmitComment(postId)}>comment</button>
+
+            </div>
+
         </div >
     );
 }

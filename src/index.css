@@ -302,3 +302,7 @@ hr {
 .headerDiv {
   margin-top: 10px;
 }
+
+.reactionDiv {
+  align-content: start;
+}

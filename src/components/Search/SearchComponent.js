@@ -2,13 +2,12 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Comments from "../PostDisplay/Comments/Comments";
+import Reaction from "../PostDisplay/Reaction";
 const SearchComponent = ({ posts, users, setPosts, setUsers }) => {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
     const [searchString, setSearchString] = useState('');
     const navigate = useNavigate();
-    const [likedPosts, setLikedPosts] = useState({});  // For 'like' reactions
-    const [lovedPosts, setLovedPosts] = useState({});  // For 'love' reactions
 
     const handleSearch = () => {
         if (searchString.trim() === '') {
@@ -47,85 +46,10 @@ const SearchComponent = ({ posts, users, setPosts, setUsers }) => {
 
     };
 
-    // Navigate to user profile on click
-    const handleUserClick = (userId) => {
-        navigate(`/profile/${userId}`)
-    };
 
-
-    // Handle the "like" action
-    const handleLiked = async (postId) => {
-        try {
-            const isLiked = likedPosts[postId]; // Get the current like status for the post
-
-            // If the post is liked, remove the like
-            if (isLiked) {
-                await axios.delete(`http://localhost:8080/posts/${postId}/likes`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    },
-                    data: {
-                        postId,
-                        accountId: userId,
-                        type: 1
-                    }
-                });
-                setLikedPosts((prevState) => ({ ...prevState, [postId]: false }));
-            } else {
-                // Otherwise, add the like
-                await axios.post(`http://localhost:8080/posts/${postId}/likes`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    },
-                    postId,
-                    accountId: userId,
-                    type: 1
-                });
-                setLikedPosts((prevState) => ({ ...prevState, [postId]: true }));
-            }
-        } catch (error) {
-            console.error("Error handling like:", error);
-        }
-    };
-
-    // Handle the "love" action
-    const handleLoved = async (postId) => {
-        try {
-            const isLoved = lovedPosts[postId]; // Get the current love status for the post
-
-            // If the post is loved, remove the love
-            if (isLoved) {
-                await axios.delete(`http://localhost:8080/posts/${postId}/likes`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    },
-                    data: {
-                        postId,
-                        accountId: userId,
-                        type: 2
-                    }
-                });
-                setLovedPosts((prevState) => ({ ...prevState, [postId]: false }));
-            } else {
-                // Otherwise, add the love
-                await axios.post(`http://localhost:8080/posts/${postId}/likes`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    },
-                    postId,
-                    accountId: userId,
-                    type: 2
-                });
-                setLovedPosts((prevState) => ({ ...prevState, [postId]: true }));
-            }
-        } catch (error) {
-            console.error("Error handling love:", error);
-        }
-    };
-
-    // Check if the post is liked or loved
-    const checkIfLiked = (postId) => likedPosts[postId];
-    const checkIfLoved = (postId) => lovedPosts[postId];
+    const handleUserClick = (accountId) => {
+        navigate(`/profile/${accountId}`)
+    }
     return (
         <div>
             <div className="search">
@@ -160,17 +84,8 @@ const SearchComponent = ({ posts, users, setPosts, setUsers }) => {
                             <br />
                             {post.imageUrl && <img src={post.imageUrl} alt="Post" />}
                         </div>
+                        <Reaction postId={post.postId} />
                         <Comments postId={post.postId} />
-                        <div className="postFooter">
-                            <button onClick={() => handleLiked(post.postId)}>
-                                {checkIfLiked(post.postId) ? 'Unlike' : 'Like'}
-                            </button>
-                            <button onClick={() => handleLoved(post.postId)}>
-                                {checkIfLoved(post.postId) ? 'Unlove' : 'Love'}
-                            </button>
-                            <input type="text" placeholder="Add a comment..." />
-                            <button>Comment</button>
-                        </div>
                     </div>
                 ))
             }
