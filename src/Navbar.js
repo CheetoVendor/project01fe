@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+
+    // signs out (removes token)
     const signout = () => {
         localStorage.removeItem('token')
     }
+
     const token = localStorage.getItem('token');
 
     return (
@@ -14,7 +17,7 @@ const Navbar = () => {
                 <Link to="./home">Home</Link>
                 <Link to="./login">Login</Link>
                 <Link to="./signup">Signup</Link>
-
+                <Link to="./search">Search</Link>
                 <Link to="./login" onClick={signout}>Signout</Link>
                 <Link to="./profile/1" >Profile</Link>
                 <Link to="./relationships">Relationships</Link>

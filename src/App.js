@@ -9,6 +9,7 @@ import Profile from './profile';
 import { useState } from 'react';
 import Relationships from './relationships';
 import EditProfile from './editprofile';
+import Search from './search';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
           <Route path='/profile/:userId' element={<Profile />} />
           <Route path="/relationships" element={<Relationships />} />
           <Route path='/editprofile' element={<EditProfile />} />
+          <Route path='/search' element={<Search />} />
         </Routes>
 
       </div>
