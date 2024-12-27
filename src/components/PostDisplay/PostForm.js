@@ -5,6 +5,10 @@ const PostForm = ({ onPostAdded }) => {
     const [postText, setPostText] = useState("")
 
     const submitHandler = (e) => {
+        if (postText.trim() === '') {
+            return;
+        }
+
         e.preventDefault();
         const token = localStorage.getItem('token')
 
