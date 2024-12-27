@@ -39,7 +39,9 @@ const Comments = ({ postId }) => {
         })
             .then((res) => {
                 setCommentText("");
-                console.log(res);
+                const newComment = res.data
+                setComments((pre) => [...pre, newComment]);
+                console.log(res.data);
                 console.log("Comment submitted")
             })
             .catch((ex) => {

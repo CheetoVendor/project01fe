@@ -46,10 +46,10 @@ const SearchComponent = ({ posts, users, setPosts, setUsers }) => {
 
     };
 
-
     const handleUserClick = (accountId) => {
         navigate(`/profile/${accountId}`)
     }
+
     return (
         <div>
             <div className="search">
