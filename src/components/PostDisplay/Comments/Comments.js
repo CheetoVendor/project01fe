@@ -29,6 +29,10 @@ const Comments = ({ postId }) => {
 
     // posts comment to website
     const handleSubmitComment = (postId) => {
+        if (commentText.trim() === '') {
+            return;
+        }
+
         axios.post(`http://localhost:8080/posts/${postId}/comments`, {
             headers: {
                 Authorization: `Bearer ${token}`

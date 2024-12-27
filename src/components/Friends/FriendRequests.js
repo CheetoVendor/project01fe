@@ -6,8 +6,18 @@ const FriendRequests = () => {
     const [friendRequests, setFriendRequests] = useState([])
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
+    const [isVisible, setIsVisible] = useState(true);
+
+    const isFriendRequestsVisible = () => {
+        if (friendRequests.length > 0) {
+            setIsVisible(true);
+        } else {
+            setIsVisible(false);
+        }
+    }
 
     useEffect(() => {
+        // Get pending friend requests
         axios.get(`http://localhost:8080/friends/${userId}/pending`, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -16,8 +26,10 @@ const FriendRequests = () => {
             .then((res) => {
                 setFriendRequests(res.data);
                 console.log(res.data);
+                // set friend requests visible
+                isFriendRequestsVisible();
             })
-    }, [userId])
+    }, [userId, isFriendRequestsVisible, token])
 
     const handleDecline = (friendId) => {
         axios.delete(`http://localhost:8080/friends/${friendId}`, {
@@ -33,6 +45,7 @@ const FriendRequests = () => {
                 console.log(ex);
             })
     }
+
 
     const handleAccept = (friendId) => {
         axios.patch(`http://localhost:8080/friends/${friendId}`, 1,
@@ -54,7 +67,9 @@ const FriendRequests = () => {
     return (
         <div>
             <h2 style={{ textDecoration: "underline" }}>Friend Requests</h2>
-            {
+
+            {isVisible ? (
+
                 friendRequests.map((requests) => (
                     <div key={requests.friendId}>
                         <img className="profilePicture" src={requests.friender.profilePicture} />
@@ -64,7 +79,13 @@ const FriendRequests = () => {
                     </div>
 
                 ))
-            }
+
+            ) : (
+                <span>No friend requests...</span>
+            )}
+
+
+
         </div>);
 }
 
