@@ -20,6 +20,10 @@ const EditProfile = () => {
     }, [userId])
 
     const handleProfileUpdate = () => {
+        if (username.trim() === '' || bio.trim() === '') {
+            return
+        }
+
         axios.patch(`http://localhost:8080/profile/${userId}`, {
             headers: {
                 Authorization: `Bearer ${token}`
