@@ -75,7 +75,7 @@ const SearchComponent = ({ posts, users, setPosts, setUsers }) => {
                 posts.map((post) => (
                     <div className="postCard" id={post.postId}>
                         <div className="postHeader" onClick={() => handleUserClick(post.postedBy.accountId)}>
-                            <img className="profilePicture" src={post.postedBy.profilePicture} alt="Profile" />
+                            <img className="profilePicture" src={post.postedBy.profilePictureUrl} alt="Profile" />
                             <b className="profileName">{post.postedBy.username}</b>
                         </div>
                         <hr className="divider" />

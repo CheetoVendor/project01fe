@@ -2,7 +2,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { FaCheck } from "react-icons/fa";
-const FriendRequests = () => {
+
+const FriendRequests = ({ setFriends, friends }) => {
     const [friendRequests, setFriendRequests] = useState([])
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
@@ -25,9 +26,11 @@ const FriendRequests = () => {
         })
             .then((res) => {
                 setFriendRequests(res.data);
-                console.log(res.data);
                 // set friend requests visible
                 isFriendRequestsVisible();
+            })
+            .catch((ex) => {
+                console.log(ex);
             })
     }, [userId, isFriendRequestsVisible, token])
 
@@ -38,7 +41,6 @@ const FriendRequests = () => {
             }
         })
             .then((res) => {
-                console.log(res);
                 setFriendRequests(prev => prev.filter(req => req.friendId !== friendId));
             })
             .catch((ex) => {
@@ -56,7 +58,8 @@ const FriendRequests = () => {
                 }
             })
             .then((res) => {
-                console.log(res.data);
+                // set friends
+                setFriends((prev) => [...prev, res.data]);
 
             })
             .catch((ex) => {
@@ -72,7 +75,7 @@ const FriendRequests = () => {
 
                 friendRequests.map((requests) => (
                     <div key={requests.friendId}>
-                        <img className="profilePicture" src={requests.friender.profilePicture} />
+                        <img className="profilePicture" src={requests.friender.profilePictureUrl} />
                         <b>{requests.friender.username}</b>
                         <FaCheck style={{ marginLeft: "20px", cursor: 'pointer' }} onClick={() => handleAccept(requests.friendId)} />
                         <AiOutlineClose style={{ marginLeft: "20px", cursor: 'pointer' }} onClick={() => handleDecline(requests.friendId)} />

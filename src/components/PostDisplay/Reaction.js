@@ -22,6 +22,8 @@ const Reaction = ({ postId }) => {
                 .then((res) => {
                     console.log(res.data);
                     setLiked(true);
+                }).catch((ex) => {
+                    console.log(ex);
                 })
         } else {
             // remove like
@@ -33,6 +35,8 @@ const Reaction = ({ postId }) => {
                 .then((res) => {
                     console.log(res.data);
                     setLiked(false);
+                }).catch((ex) => {
+                    console.log(ex);
                 })
 
         }
@@ -49,6 +53,8 @@ const Reaction = ({ postId }) => {
                 .then((res) => {
                     console.log(res.data);
                     setLoved(true);
+                }).catch((ex) => {
+                    console.log(ex);
                 })
         } else {
             axios.delete(`http://localhost:8080/posts/${postId}/likes`, {
@@ -59,6 +65,9 @@ const Reaction = ({ postId }) => {
                 .then((res) => {
                     console.log(res.data);
                     setLoved(false);
+                })
+                .catch((ex) => {
+                    console.log(ex);
                 })
         }
     }
@@ -74,6 +83,9 @@ const Reaction = ({ postId }) => {
                     setLiked(true)
                 }
             })
+            .catch((ex) => {
+                console.log(ex);
+            })
 
         // check if loved 
 
@@ -87,6 +99,9 @@ const Reaction = ({ postId }) => {
                 if (res.data) {
                     setLoved(true)
                 }
+            })
+            .catch((ex) => {
+                console.log(ex);
             })
     }, [postId, userId])
 

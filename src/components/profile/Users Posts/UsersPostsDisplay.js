@@ -31,7 +31,7 @@ const UsersPostsDisplay = ({ userId }) => {
             {posts.map((post) => (
                 <div className="postCard" key={post.postId}>
                     <div className="postHeader" onClick={() => handleUserClick(post.postedBy.accountId)}>
-                        <img className="profilePicture" src={post.postedBy.profilePicture} alt="Profile" />
+                        <img className="profilePicture" src={post.postedBy.profilePictureUrl} alt="Profile" />
                         <b className="profileName">{post.postedBy.username}</b>
                     </div>
                     <hr className="divider" />

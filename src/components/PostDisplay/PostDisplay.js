@@ -8,14 +8,10 @@ import Comments from "./Comments/Comments";
 import Reaction from "./Reaction";
 const PostDisplay = ({ setPosts, posts }) => {
     const navigate = useNavigate();
-    const userId = localStorage.getItem('userId');
-    const token = localStorage.getItem('token');
-
 
     const handleUserClick = (postedById) => {
         navigate(`/profile/${postedById.accountId}`);
     }
-
 
     return (
         <>
@@ -23,7 +19,7 @@ const PostDisplay = ({ setPosts, posts }) => {
                 posts.map((post) => (
                     <div className="postCard" key={post.postId}>
                         <div className="postHeader" onClick={() => handleUserClick(post.postedBy)}>
-                            <img className="profilePicture" src={post.postedBy.profilePicture || "s"}></img>
+                            <img className="profilePicture" src={post.postedBy.profilePictureUrl || "s"}></img>
                             <b className="profileName">{post.postedBy.username}</b>
                         </div>
                         <hr className="divider" />

@@ -45,7 +45,6 @@ const Comments = ({ postId }) => {
                 setCommentText("");
                 const newComment = res.data
                 setComments((pre) => [...pre, newComment]);
-                console.log(res.data);
                 console.log("Comment submitted")
             })
             .catch((ex) => {
@@ -62,7 +61,7 @@ const Comments = ({ postId }) => {
                     <div key={comment.commentId} className="commentContainer">
                         <img
                             className="profilePictureComment"
-                            src={comment.postedBy.profilePicture}
+                            src={comment.postedBy.profilePictureUrl}
                             alt={comment.postedBy.username}
                             onClick={() => handleUserClick(comment.postedBy.accountId)}
                         />

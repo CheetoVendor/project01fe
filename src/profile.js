@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import FriendDisplay from "./components/Friends/FriendDisplay";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import UsersPostsDisplay from "./components/profile/Users Posts/UsersPostsDisplay";
 import Follow from "./components/Follows/Follow";
 import FriendRequests from "./components/Friends/FriendRequests";
@@ -12,7 +12,7 @@ const Profile = () => {
     const currentUsersProfile = localStorage.getItem('userId')
     const [isFriend, setIsFriend] = useState(null)
     const [isFollowing, setIsFollowing] = useState(null)
-
+    const navigate = useNavigate();
     // Checks whether the user is already a friend OR if its the same users account
     const checkFriendStatus = () => {
         if (userId === currentUsersProfile) {
@@ -56,7 +56,13 @@ const Profile = () => {
                 console.log(ex);
             })
     }
-
+    // If there is no cookie, redirect to login
+    useEffect(() => {
+        console.log(token)
+        if (token === null) {
+            navigate('/login');
+        }
+    }, [token])
 
     // gets users profile
     useEffect(() => {
@@ -137,7 +143,7 @@ const Profile = () => {
 
         <div className="userProfile">
             <div className="profileInfo">
-                <img className="profilePictureOnProfile" src={user.profilePicture || "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="} />
+                <img className="profilePictureOnProfile" src={user.profilePictureUrl || "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="} />
                 <p className="usernameOnProfile">{user.username}'s Profile</p>
 
                 {/* Check if user is viewing their OWN profile*/}

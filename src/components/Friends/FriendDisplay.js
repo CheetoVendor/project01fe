@@ -2,17 +2,16 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const FriendDisplay = ({ userId }) => {
+const FriendDisplay = ({ userId, friends, setFriends }) => {
 
     // get friends for user
-    const [friends, setFriends] = useState([]);
+
     const [usersFriends, setUsersFriends] = useState([])
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
     // Filters the list of friends
     let getFriends = () => {
-        console.log(friends);
         let userFriendsSet = new Set();
 
         friends.forEach(element => {
@@ -20,15 +19,13 @@ const FriendDisplay = ({ userId }) => {
             if (element.friender.accountId !== parseInt(userId)) {
                 userFriendsSet.add(element.friender);
             }
-            console.log("friended account id:" + element.friended.accountId)
+
             if (element.friended.accountId !== parseInt(userId)) {
                 userFriendsSet.add(element.friended);
             }
         });
 
         setUsersFriends([...userFriendsSet]);
-        console.log(userId);
-        console.log("sorted list: ", [...userFriendsSet]);
     }
 
     useEffect(() => {
@@ -69,7 +66,7 @@ const FriendDisplay = ({ userId }) => {
                         {
                             usersFriends.map((friend) => (
                                 <div className="friendCard" onClick={() => handleFriendClick(friend.accountId)} key={friend.accountId}>
-                                    <img className="profilePicture" src={friend.profilePicture} />
+                                    <img className="profilePicture" src={friend.profilePictureUrl} />
                                     <b>{friend.username}</b>
                                 </div>
                             ))

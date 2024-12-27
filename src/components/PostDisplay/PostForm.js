@@ -5,33 +5,27 @@ const PostForm = ({ onPostAdded }) => {
     const [postText, setPostText] = useState("")
 
     const submitHandler = (e) => {
+        e.preventDefault();
         if (postText.trim() === '') {
             return;
         }
 
-        e.preventDefault();
         const token = localStorage.getItem('token')
 
-        try {
-            axios.post("http://localhost:8080/posts", {
-                headers: {
-                    Authorization: 'Bearer ' + token
-                },
-                postText: postText,
-                postedBy: { accountId: 1 }
+        axios.post("http://localhost:8080/posts", {
+            headers: {
+                Authorization: 'Bearer ' + token
+            },
+            postText: postText,
+            postedBy: { accountId: 1 }
+        })
+            .then((res) => {
+                console.log("HELLO" + res);
+                onPostAdded(res.data);
+            }).catch((ex) => {
+                console.log(ex);
             })
-                .then((res) => {
-                    console.log("HELLO" + res);
-                    onPostAdded(res.data);
-                })
-
-
-        } catch (ex) {
-            console.log(ex);
-        }
         setPostText("")
-
-
     }
 
     return (

@@ -15,7 +15,6 @@ const Follow = () => {
             }
         })
             .then((res) => {
-                console.log("logging followers: " + res.data);
                 setFollowers(res.data);
             })
             .catch((ex) => {
@@ -33,8 +32,6 @@ const Follow = () => {
             }
         })
             .then((res) => {
-                console.log("logging following: " + res.data);
-                console.log(res.data);
                 setFollowing(res.data);
             })
             .catch((ex) => {
@@ -50,7 +47,6 @@ const Follow = () => {
         })
             .then((res) => {
                 setFollowing(prevFollowing => prevFollowing.filter(f => f !== follow));
-                console.log(res.data);
             })
             .catch((ex) => {
                 console.log(ex);
@@ -64,7 +60,7 @@ const Follow = () => {
                 {
                     followers.map((follow) => (
                         <div>
-                            <img className="profilePicture" src={follow.profilePicture} />
+                            <img className="profilePicture" src={follow.profilePictureUrl} />
                             <span className="profileName" >{follow.username}</span>
                         </div>
 
@@ -78,7 +74,7 @@ const Follow = () => {
                 {
                     following.map((follow) => (
                         <div>
-                            <img className="profilePicture" src={follow.profilePicture} />
+                            <img className="profilePicture" src={follow.profilePictureUrl} />
                             <span className="profileName">{follow.username}</span>
                             <AiOutlineClose style={{ marginLeft: "20px" }} onClick={() => handleDeleteFollow(follow)} />
                         </div>

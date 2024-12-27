@@ -1,11 +1,23 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const EditProfile = () => {
     const userId = localStorage.getItem('userId');
     const [user, setUser] = useState(null);
     const [username, setUsername] = useState("");
     const [bio, setBio] = useState("");
+
     const token = localStorage.getItem('token');
+    const navigate = useNavigate();
+
+    // navigate back to login if token is empty
+    useEffect(() => {
+        if (token === null) {
+            navigate('/login')
+        }
+
+    }, [token])
+
     // get profile info on load
     useEffect(() => {
         axios.get(`http://localhost:8080/profile/${userId}`, {
@@ -16,6 +28,9 @@ const EditProfile = () => {
             .then((res) => {
                 setUser(res.data);
                 console.log("user loaded");
+            })
+            .catch((ex) => {
+                console.log(ex);
             })
     }, [userId])
 
@@ -35,6 +50,9 @@ const EditProfile = () => {
             .then((res) => {
                 setUser(res.data);
                 console.log("user loaded");
+            })
+            .catch((ex) => {
+                console.log(ex);
             })
     }
 
